@@ -1,11 +1,12 @@
 package com.xib.assessment.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-//@Table(name = "team_table", schema = "team_schema")
 public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

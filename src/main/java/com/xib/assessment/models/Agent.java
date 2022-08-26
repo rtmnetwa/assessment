@@ -18,6 +18,7 @@ public class Agent {
     private String firstName;
     private String lastName;
     private String idNumber;
+
     @ManyToOne
     @JoinColumn(name = "team_id")
     private Team team;

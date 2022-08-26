@@ -4,6 +4,7 @@ import com.xib.assessment.exceptionHandling.ResourceExistsException;
 import com.xib.assessment.exceptionHandling.ResourceNotFoundException;
 import com.xib.assessment.models.Agent;
 import com.xib.assessment.models.Team;
+import com.xib.assessment.projection.SecureAgent;
 import com.xib.assessment.repositories.AgentRepository;
 import com.xib.assessment.services.AgentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,9 +43,9 @@ public class AgentServiceImp implements AgentService {
 
     //First method to test
     @Override
-    public List<Agent> getPagedAgents(final int pageNo, final int pageSize) {
+    public List<SecureAgent> getPagedAgents(final int pageNo, final int pageSize) {
         Pageable page= PageRequest.of(pageNo, pageSize);
-        Page p= agentRepository.findAll(page);
+        Page p= agentRepository.findAllPaged(page);
         return p.toList();
     }
 

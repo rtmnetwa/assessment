@@ -43,6 +43,11 @@ public class TeamController {
     public Team getTeam(@PathVariable("id") final Long id) throws ResourceNotFoundException{
         return teamServiceImp.getTeamById(id);
     }
+    @GetMapping("/emptyTeams")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public List<Team> emptyTeams() {
+        return teamServiceImp.emptyTeams();
+    }
     @GetMapping("/findAllTeams")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public List<Team> getAllTeams() {

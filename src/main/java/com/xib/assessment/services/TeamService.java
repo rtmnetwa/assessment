@@ -12,5 +12,6 @@ public interface TeamService {
     Team addTeam(Team team) throws ResourceExistsException;
     Team getTeamById(Long id) throws ResourceNotFoundException;
     List<Team> getAllTeams();
+    List<Team> emptyTeams();
     Team addManager(Long teamId, Manager manager) throws ResourceNotFoundException, MaxManagersReachedException;
 }

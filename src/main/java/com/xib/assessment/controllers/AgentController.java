@@ -1,6 +1,7 @@
 package com.xib.assessment.controllers;
 
 import com.xib.assessment.exceptionHandling.ResourceNotFoundException;
+import com.xib.assessment.projection.SecureAgent;
 import com.xib.assessment.serviceImpl.AgentServiceImp;
 import com.xib.assessment.exceptionHandling.ResourceExistsException;
 import com.xib.assessment.serviceImpl.TeamServiceImp;
@@ -48,10 +49,9 @@ public class AgentController {
         return agentServiceImp.getAllAgents();
     }
 
-    //FirstMethod to test
     @GetMapping("/findAgents/{pageNo}/{pageSize}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public List<Agent> findPagedAgents(@PathVariable("pageNo")final int pageNo, @PathVariable("pageSize")final int pageSize) {
+    public List<SecureAgent> findPagedAgents(@PathVariable("pageNo")final int pageNo, @PathVariable("pageSize")final int pageSize) {
         return agentServiceImp.getPagedAgents(pageNo, pageSize);
     }
     @PutMapping("/team/{id}/agent")

@@ -1,5 +1,6 @@
 package com.xib.assessment.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,8 +17,10 @@ public class Manager {
     private long id;
     private String name;
     private String idNumber;
+    @JsonIgnore
     @OneToMany (mappedBy = "manager")
     private List<Agent> agents;
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "manager_team", joinColumns = @JoinColumn( name = "manager_id"),
             inverseJoinColumns = @JoinColumn(name = "team_id")

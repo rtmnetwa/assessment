@@ -42,6 +42,11 @@ public class TeamServiceImp implements TeamService {
         return teamRepository.findAll();
     }
 
+    @Override
+    public List<Team> emptyTeams() {
+        return teamRepository.emptyTeams();
+    }
+
     //Adds a maximum of 2 managers for each team and prevents adding another
     @Override
     public Team addManager(final Long teamId, final Manager manager) throws ResourceNotFoundException, MaxManagersReachedException {
