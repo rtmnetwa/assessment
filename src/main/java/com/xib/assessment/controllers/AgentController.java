@@ -1,5 +1,11 @@
-package com.xib.assessment;
+package com.xib.assessment.controllers;
 
+import com.xib.assessment.exceptionHandling.ResourceNotFoundException;
+import com.xib.assessment.serviceImpl.AgentServiceImp;
+import com.xib.assessment.exceptionHandling.ResourceExistsException;
+import com.xib.assessment.serviceImpl.TeamServiceImp;
+import com.xib.assessment.models.Agent;
+import com.xib.assessment.models.Team;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -8,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("agents/")
+@RequestMapping("/agents")
 public class AgentController {
 
     private AgentServiceImp agentServiceImp;
@@ -19,7 +25,7 @@ public class AgentController {
         this.teamServiceImp=teamServiceImp;
     }
 
-    @PostMapping("addAgent/")
+    @PostMapping("/agent/")
     @ResponseStatus(HttpStatus.CREATED)
     public Agent addAgent(@RequestBody final Agent agent){
         Agent newAgent=new Agent();
@@ -30,26 +36,27 @@ public class AgentController {
         newAgent.setTeam(agent.getTeam());
         return agentServiceImp.addAgent(newAgent);
     }
-    @GetMapping("agent/{id}")
+    @GetMapping("/agent/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public Agent findAgent(@PathVariable("id") long id) throws ResourceExistsException{
+    public Agent findAgent(@PathVariable("id") long id) throws ResourceNotFoundException {
         return agentServiceImp.getAgent(id);
     }
 
-    @GetMapping("agents/")
+    @GetMapping("/agents")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public List<Agent> getAllAgents(){
         return agentServiceImp.getAllAgents();
     }
 
-    @GetMapping("findAgents/{pageNo}/{pageSize}")
+    //FirstMethod to test
+    @GetMapping("/findAgents/{pageNo}/{pageSize}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public List<Agent> findPagedAgents(@PathVariable("pageNo")final int pageNo, @PathVariable("pageSize")final int pageSize) {
         return agentServiceImp.getPagedAgents(pageNo, pageSize);
     }
     @PutMapping("/team/{id}/agent")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public Agent editTeamAgent(@PathVariable("id")final long id, @RequestBody final Agent agent) throws ResourceExistsException{
+    public Agent editTeamAgent(@PathVariable("id")final long id, @RequestBody final Agent agent) throws ResourceNotFoundException {
         Team team=teamServiceImp.getTeamById(id);
         return agentServiceImp.editTeamAgent(team, agent);
     }

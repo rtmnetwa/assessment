@@ -1,5 +1,11 @@
-package com.xib.assessment;
+package com.xib.assessment.serviceImpl;
 
+import com.xib.assessment.exceptionHandling.ResourceExistsException;
+import com.xib.assessment.exceptionHandling.ResourceNotFoundException;
+import com.xib.assessment.models.Agent;
+import com.xib.assessment.models.Team;
+import com.xib.assessment.repositories.AgentRepository;
+import com.xib.assessment.services.AgentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -7,7 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AgentServiceImp implements AgentService {
@@ -19,15 +24,15 @@ public class AgentServiceImp implements AgentService {
         this.agentRepository=agentRepository;
     }
 
-    public Agent addAgent(Agent agent) {
+    public Agent addAgent(final Agent agent) {
         return agentRepository.save(agent);
     }
 
     @Override
-    public Agent getAgent(long id) throws ResourceExistsException{
+    public Agent getAgent(final long id) throws ResourceNotFoundException {
         return agentRepository.findById(id)
                 .orElseThrow(
-                ()-> new ResourceExistsException("Resource doesn't exists"));
+                ()-> new ResourceNotFoundException("Agent doesn't exists"));
     }
 
     @Override
@@ -35,18 +40,19 @@ public class AgentServiceImp implements AgentService {
         return agentRepository.findAll();
     }
 
+    //First method to test
     @Override
-    public List<Agent> getPagedAgents(int pageNo, int pageSize) {
+    public List<Agent> getPagedAgents(final int pageNo, final int pageSize) {
         Pageable page= PageRequest.of(pageNo, pageSize);
         Page p= agentRepository.findAll(page);
         return p.toList();
     }
 
     @Override
-    public Agent editTeamAgent(Team team, Agent agent) throws ResourceExistsException{
+    public Agent editTeamAgent(final Team team, final Agent agent) throws ResourceNotFoundException{
         Agent a=agentRepository.findById(agent.getId())
                 .orElseThrow(
-                ()-> new ResourceExistsException("Agent doesn't exist.")
+                ()-> new ResourceNotFoundException("Agent doesn't exist.")
                 );
         a.setTeam(team);
         return agentRepository.save(a);

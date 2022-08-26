@@ -1,4 +1,4 @@
-package com.xib.assessment;
+package com.xib.assessment.exceptionHandling;
 
 public class ResourceExistsException extends Exception{
 

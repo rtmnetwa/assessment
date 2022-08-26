@@ -1,36 +1,29 @@
-package com.xib.assessment;
+package com.xib.assessment.models;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name="agent_table", schema="agent_schema")
+//@Table(name="agent_table", schema="agent_schema")
 @AllArgsConstructor
-@NoArgsConstructor
+//@NoArgsConstructor
 public class Agent {
+
+    public Agent(){}
     @Id
-    @GeneratedValue
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(name = "first_name")
     private String firstName;
-    @Column(name = "last_name")
     private String lastName;
-    @Column(name = "id_number")
     private String idNumber;
     @ManyToOne
+    @JoinColumn(name = "team_id")
     private Team team;
-    @OneToOne (mappedBy = "agent")
+    @ManyToOne
+    @JoinColumn(name="manager_id")
     private Manager manager;
-    public Agent(long id, String firstName, String lastName, Team team){
-        this.id=id;
-        this.firstName=firstName;
-        this.lastName=lastName;
-        this.team=team;
-    }
 
     public Long getId() {
         return id;
